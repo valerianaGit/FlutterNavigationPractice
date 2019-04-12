@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SecondRoute extends StatelessWidget {
+class SecondRoute extends StatelessWidget { //working fine :)
   @override
   Widget build(BuildContext context) {
     return Scaffold(

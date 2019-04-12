@@ -12,7 +12,7 @@ void main() {
      Widget build(BuildContext context) {
        return Scaffold(
          appBar: AppBar(
-           title: Text('First Route'),
+           title: Text('First Route - VC'),
          ),
          body: Center(
            child: RaisedButton(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 //import 'second_route.dart';
 
 /*void main() {
@@ -79,7 +80,7 @@ class SecondRoute extends StatelessWidget {
   }
 }
 */
-
+/*
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -105,7 +106,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {      //1 . - DEFINE THE HOME SCREEN, LIKE SO 
+class HomeScreen extends StatelessWidget {       
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,7 +166,7 @@ class ScreenArguments {
   ScreenArguments(this.title, this.message);
 }
 
-class SelectionButton extends StatelessWidget {   //2. - ADD BUTTON THAT LAUNCHES A SELECTION SCREEN
+class SelectionButton extends StatelessWidget {  
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
@@ -177,12 +178,12 @@ class SelectionButton extends StatelessWidget {   //2. - ADD BUTTON THAT LAUNCHE
   }
   _navigateAndDisplaySelection(BuildContext context) async {
     final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SelectionScreen()),);
-    Scaffold.of(context)                                     //5 . - SHOW SNACKBAR WITH SELECTION
+    Scaffold.of(context)                                     
     ..removeCurrentSnackBar()      
     ..showSnackBar(SnackBar(content: Text('$result')));
   }
 }
-                                                         //3 . - SHOW SELECTION SCREEN WITH 2 BUTTONS
+                                                         
 class SelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -198,7 +199,7 @@ class SelectionScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: RaisedButton(
                 onPressed: () {
-                 Navigator.pop(context, 'Yep!');          //4 . - onPressed {close selection screen}
+                 Navigator.pop(context, 'Yep!');          
                 },
                 child: Text('Yep!'),
               ),
@@ -214,6 +215,68 @@ class SelectionScreen extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+*/
+
+
+class Todo {                                   //1 . - Define a Model for Todo, has title and description
+  final String title;
+  final String description;
+  Todo(this.title, this.description);
+}
+
+void main() {                                 // generate the list view in the main function 
+  runApp(MaterialApp(
+    title: 'Passing Data',
+    home: TodosScreen(
+      todos: List.generate(
+        20, (i) => Todo(
+          'Todo $i',
+          'A description of what needs to be done for Todo $i',
+        ),),
+    ),
+    ));
+}
+
+class TodosScreen extends StatelessWidget {  
+  final List<Todo> todos;
+  TodosScreen({Key key, @required this.todos}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+   return Scaffold(
+     appBar: AppBar(
+       title: Text('Todos'),
+     ),
+     body: ListView.builder(  
+      itemCount: todos.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(todos[index].title),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(todo: todos[index]),),);
+          },
+        );
+      },
+    ),
+   );
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  final Todo todo;
+  DetailScreen({Key key, @required this.todo}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(todo.title),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Text(todo.description),
       ),
     );
   }
